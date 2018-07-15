@@ -4,3 +4,5 @@ InnovativeTool/obj/
 InnovativeTool/\.vs/
 
 *.config
+
+InnovativeTool/bin/Debug/
