@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using Lib.Common;
+using System.Xml;
 
 namespace InnovativeTool
 {
@@ -29,7 +30,14 @@ namespace InnovativeTool
         #endregion
 
         #region Membri privati
-        static private int DirLevel = 0;
+        private string OrderId;
+        private string OrderDateTime;
+        private string ShipId;
+        private string OrderItemProductCode;
+        private string OrderItemDescription;
+        private string OrderItemQuantity;
+        private string OrderItemThemeOptions;
+        private string OrderItemPrice;
         #endregion
 
         #region Membri statici
@@ -72,7 +80,6 @@ namespace InnovativeTool
                    
             return;
         }
-#if true
         private void ListFiles(string searchDirectory, out List<string> fileList)
         {
             fileList = new List<string>();
@@ -91,8 +98,6 @@ namespace InnovativeTool
 
             return;
         }
-#endif
-
 #if false
         private void DirSearch(string sDir)
         {
@@ -138,6 +143,104 @@ namespace InnovativeTool
 #endif
         }
 #endif
+        private void ParseXml(string xmlFileToParse)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFileToParse);
+
+            foreach (XmlNode mainNode in doc.DocumentElement.ChildNodes)
+            {
+                string mainNodeName = mainNode.Name.ToLower();
+
+                if(mainNodeName == "order_info")
+                {
+                    foreach (XmlNode locNode in mainNode)
+                    {
+                        string val = locNode.InnerText;
+                        switch(locNode.Name.ToLower())
+                        {
+                            case "order_id":
+                                OrderId = val;
+                                break;
+
+                            case "order_datetime":
+                                OrderDateTime = val;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
+                else if (mainNodeName == "ship_to_info")
+                {
+                    foreach (XmlNode locNode in mainNode)
+                    {
+                        string val = locNode.InnerText;
+                        switch (locNode.Name.ToLower())
+                        {
+                            case "ship_id":
+                                ShipId = val;
+                                break;
+                                
+                            default:
+                                break;
+                        }
+                    }
+                }
+                else if (mainNodeName == "order_item")
+                {
+                    foreach (XmlNode locNode in mainNode)
+                    {
+                        string val = locNode.InnerText;
+                        switch (locNode.Name.ToLower())
+                        {
+                            case "order_item_product_code":
+                                OrderItemProductCode = val;
+                                break;
+
+                            case "order_item_description":
+                                OrderItemDescription = val;
+                                break;
+
+                            case "order_item_quantity":
+                                OrderItemQuantity = val;
+                                break;
+
+                            case "order_item_theme_options":
+                                OrderItemThemeOptions = val;
+                                break;
+
+                            case "order_item_price":
+                                OrderItemPrice = val;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        private void FillInfoBox()
+        {
+            textBoxOrderInfo.Text = "";
+
+            textBoxOrderInfo.AppendText("ID:" + OrderId);
+
+        //            private string OrderId;
+        //private string OrderDateTime;
+        //private string ShipId;
+        //private string OrderItemProductCode;
+        //private string OrderItemDescription;
+        //private string OrderItemQuantity;
+        //private string OrderItemThemeOptions;
+        //private string OrderItemPrice;
+        }
         #endregion
 
         #region Metodi pubblici
@@ -162,6 +265,18 @@ namespace InnovativeTool
 
             List<string> fileList;
             ListFiles(Path.Combine(TEST_FOLDER, NEW_ORDER_DIRNAME, item),out fileList);
+
+            foreach(string filePath in fileList)
+            {
+                if (Path.GetExtension(filePath).ToLower() == ".xml")
+                {
+                    ParseXml(filePath);
+                    break;
+                }
+            }
+
+            FillInfoBox();
+
         }
 #endregion
 
