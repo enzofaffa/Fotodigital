@@ -48,7 +48,9 @@ namespace InnovativeTool
         {
             InitializeComponent();
 
+           
             string path = Directory.GetCurrentDirectory();
+
 
             /* fill order list */
             List<string> orderList;
@@ -193,6 +195,11 @@ namespace InnovativeTool
                     foreach (XmlNode locNode in mainNode)
                     {
                         string val = locNode.InnerText;
+
+                        if(val == "")
+                        {
+                            val = "N.A.";
+                        }
                         switch (locNode.Name.ToLower())
                         {
                             case "order_item_product_code":
@@ -228,18 +235,59 @@ namespace InnovativeTool
         }
         private void FillInfoBox()
         {
-            textBoxOrderInfo.Text = "";
+            richTextBoxOrderInfo.Text = "";
+            richTextBoxOrderInfo.DeselectAll();
 
-            textBoxOrderInfo.AppendText("ID:" + OrderId);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("ID" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(OrderId + Environment.NewLine);
 
-        //            private string OrderId;
-        //private string OrderDateTime;
-        //private string ShipId;
-        //private string OrderItemProductCode;
-        //private string OrderItemDescription;
-        //private string OrderItemQuantity;
-        //private string OrderItemThemeOptions;
-        //private string OrderItemPrice;
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("Date and time" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(OrderDateTime + Environment.NewLine);
+
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("Shop code" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(ShipId + Environment.NewLine);
+
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("Cod" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(OrderItemProductCode + Environment.NewLine);
+
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("Description" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(OrderItemDescription + Environment.NewLine);
+
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("Quantity" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(OrderItemQuantity + Environment.NewLine);
+
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("Options" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(OrderItemThemeOptions + Environment.NewLine);
+
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Bold);
+            richTextBoxOrderInfo.AppendText("Price" + Environment.NewLine);
+            richTextBoxOrderInfo.SelectionFont = new System.Drawing.Font(richTextBoxOrderInfo.SelectionFont, System.Drawing.FontStyle.Regular);
+            richTextBoxOrderInfo.AppendText(OrderItemPrice + Environment.NewLine);
+        }
+        private void InitValue()
+        {
+            //OrderId = "N.A.";
+            //OrderDateTime = "N.A.";
+            //ShipId = "N.A.";
+            //OrderItemProductCode = "N.A.";
+            //OrderItemDescription = "N.A.";
+            //OrderItemQuantity = "N.A.";
+            //OrderItemThemeOptions = "N.A.";
+            //OrderItemPrice = "N.A.";
         }
         #endregion
 
@@ -263,10 +311,11 @@ namespace InnovativeTool
         {
             string item = checkedListBoxOrder.SelectedItem.ToString();
 
-            List<string> fileList;
-            ListFiles(Path.Combine(TEST_FOLDER, NEW_ORDER_DIRNAME, item),out fileList);
+            InitValue();
 
-            foreach(string filePath in fileList)
+            ListFiles(Path.Combine(TEST_FOLDER, NEW_ORDER_DIRNAME, item), out List<string> fileList);
+
+            foreach (string filePath in fileList)
             {
                 if (Path.GetExtension(filePath).ToLower() == ".xml")
                 {
@@ -278,15 +327,20 @@ namespace InnovativeTool
             FillInfoBox();
 
         }
-#endregion
+        #endregion
 
-#region Membri Background worker
-#endregion
+        #region Membri Background worker
+        #endregion
 
-#region Timers
-#endregion
+        #region Timers
+        #endregion
 
-#region Callbacks
-#endregion
+        #region Callbacks
+        #endregion
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
