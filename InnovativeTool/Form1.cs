@@ -11,6 +11,8 @@ using System.IO;
 using System.Net;
 using Lib.Common;
 using System.Xml;
+using System.Net;
+using System.Net.Mail;
 
 namespace InnovativeTool
 {
@@ -58,7 +60,7 @@ namespace InnovativeTool
             foreach(string s in orderList)
             {
                 string dirName = Path.GetFileName(s);
-                checkedListBoxOrder.Items.Add(dirName);
+                listBoxOrderList.Items.Add(dirName);
             }
         }
         #endregion
@@ -307,9 +309,9 @@ namespace InnovativeTool
         {
 
         }
-        private void checkedListBoxOrder_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxOrderList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string item = checkedListBoxOrder.SelectedItem.ToString();
+            string item = listBoxOrderList.SelectedItem.ToString();
 
             InitValue();
 
@@ -325,22 +327,108 @@ namespace InnovativeTool
             }
 
             FillInfoBox();
-
         }
-        #endregion
-
-        #region Membri Background worker
-        #endregion
-
-        #region Timers
-        #endregion
-
-        #region Callbacks
-        #endregion
-
-        private void label1_Click(object sender, EventArgs e)
+        private void buttonSendMail_Click(object sender, EventArgs e)
         {
+            try
+            {
+#if false
+                MailMessage mail = new MailMessage("timbri@innovativegroupsrl.it", "efaffa@gmail.com");
+                SmtpClient client = new SmtpClient();
+                client.Port = /*25*/465;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Host = "smtps.aruba.it";
+                mail.Subject = "Timbri ordine: " + OrderItemProductCode;
+                mail.Body = "this is my test email body";
+                client.Send(mail);
+#elif false
+                SmtpClient client = new SmtpClient();
+                client.Port = 465;
+                client.Host = "smtps.aruba.it";
+                client.EnableSsl = true;
+                client.Timeout = 30000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new System.Net.NetworkCredential("timbri@innovativegroupsrl.it", "Mb04031962");
 
+                MailMessage mm = new MailMessage("timbri@innovativegroupsrl.it", "efaffa@gmail.com", "Timbri", "this is my test email body");
+                mm.BodyEncoding = UTF8Encoding.UTF8;
+                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+                client.Send(mm);
+#elif false
+                MailMessage objeto_mail = new MailMessage();
+                SmtpClient client = new SmtpClient();
+                client.Port = 465;
+                client.Host = "smtps.aruba.it";
+                client.Timeout = 10000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = true;
+                client.Credentials = new System.Net.NetworkCredential("timbri@innovativegroupsrl.it", "Mb04031962");
+                objeto_mail.From = new MailAddress("timbri@innovativegroupsrl.it");
+                objeto_mail.To.Add(new MailAddress("efaffa@gmail.com"));
+                objeto_mail.Subject = "Password Recover";
+                objeto_mail.Body = "Message";
+                client.Send(objeto_mail);
+#elif false
+                var fromAddress = new MailAddress("montedelbosco@gmail.com", "From ENZO");
+                var toAddress = new MailAddress("efaffa@gmail.com", "To ENZO");
+                const string fromPassword = "mdbmdb2012";
+                const string subject = "Subject";
+                const string body = "Body";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
+                }
+#elif true
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("http://smtp.gmail.com");
+
+                mail.From = new MailAddress("montedelbosco@gmail.com");
+                mail.To.Add("montedelbosco@gmail.com");
+                mail.Subject = "Test Mail";
+                mail.Body = "This is for testing SMTP mail from GMAIL";
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("montedelbosco@gmail.com", "mdbmdb2012");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(mail);
+                //MessageBox.Show("mail Send");
+#endif
+            }
+            catch (Exception ex)
+            {
+                textBoxLog.Text = ex.Message;
+            }
         }
+
+#endregion
+
+#region Membri Background worker
+#endregion
+
+#region Timers
+#endregion
+
+#region Callbacks
+#endregion
+
+
     }
 }

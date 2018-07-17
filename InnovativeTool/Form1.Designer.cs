@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.buttonConnect = new System.Windows.Forms.Button();
-            this.checkedListBoxOrder = new System.Windows.Forms.CheckedListBox();
             this.buttonProcess = new System.Windows.Forms.Button();
             this.textBoxLog = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBoxOrderInfo = new System.Windows.Forms.RichTextBox();
+            this.listBoxOrderList = new System.Windows.Forms.ListBox();
+            this.buttonSendMail = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -46,16 +47,6 @@
             this.buttonConnect.Text = "button1";
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
-            // 
-            // checkedListBoxOrder
-            // 
-            this.checkedListBoxOrder.CheckOnClick = true;
-            this.checkedListBoxOrder.FormattingEnabled = true;
-            this.checkedListBoxOrder.Location = new System.Drawing.Point(34, 88);
-            this.checkedListBoxOrder.Name = "checkedListBoxOrder";
-            this.checkedListBoxOrder.Size = new System.Drawing.Size(178, 229);
-            this.checkedListBoxOrder.TabIndex = 1;
-            this.checkedListBoxOrder.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxOrder_SelectedIndexChanged);
             // 
             // buttonProcess
             // 
@@ -78,12 +69,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(228, 72);
+            this.label1.Location = new System.Drawing.Point(208, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Order info";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -96,24 +86,44 @@
             // 
             // richTextBoxOrderInfo
             // 
-            this.richTextBoxOrderInfo.Location = new System.Drawing.Point(231, 88);
+            this.richTextBoxOrderInfo.Location = new System.Drawing.Point(211, 88);
             this.richTextBoxOrderInfo.Name = "richTextBoxOrderInfo";
             this.richTextBoxOrderInfo.ReadOnly = true;
             this.richTextBoxOrderInfo.Size = new System.Drawing.Size(279, 229);
             this.richTextBoxOrderInfo.TabIndex = 8;
             this.richTextBoxOrderInfo.Text = "";
             // 
+            // listBoxOrderList
+            // 
+            this.listBoxOrderList.FormattingEnabled = true;
+            this.listBoxOrderList.Location = new System.Drawing.Point(34, 88);
+            this.listBoxOrderList.Name = "listBoxOrderList";
+            this.listBoxOrderList.Size = new System.Drawing.Size(157, 225);
+            this.listBoxOrderList.TabIndex = 9;
+            this.listBoxOrderList.SelectedIndexChanged += new System.EventHandler(this.listBoxOrderList_SelectedIndexChanged);
+            // 
+            // buttonSendMail
+            // 
+            this.buttonSendMail.Location = new System.Drawing.Point(550, 88);
+            this.buttonSendMail.Name = "buttonSendMail";
+            this.buttonSendMail.Size = new System.Drawing.Size(75, 23);
+            this.buttonSendMail.TabIndex = 10;
+            this.buttonSendMail.Text = "Send email...";
+            this.buttonSendMail.UseVisualStyleBackColor = true;
+            this.buttonSendMail.Click += new System.EventHandler(this.buttonSendMail_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonSendMail);
+            this.Controls.Add(this.listBoxOrderList);
             this.Controls.Add(this.richTextBoxOrderInfo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxLog);
             this.Controls.Add(this.buttonProcess);
-            this.Controls.Add(this.checkedListBoxOrder);
             this.Controls.Add(this.buttonConnect);
             this.Name = "Form1";
             this.Text = "InnovativeTool";
@@ -125,12 +135,13 @@
         #endregion
 
         private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.CheckedListBox checkedListBoxOrder;
         private System.Windows.Forms.Button buttonProcess;
         private System.Windows.Forms.TextBox textBoxLog;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox richTextBoxOrderInfo;
+        private System.Windows.Forms.ListBox listBoxOrderList;
+        private System.Windows.Forms.Button buttonSendMail;
     }
 }
 
